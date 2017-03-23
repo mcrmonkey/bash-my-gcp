@@ -52,7 +52,6 @@ Example:
 
 ```
 gcp customer-prod
-
 ```
 
 Running the command without arguments will display your configuration profiles
@@ -106,7 +105,7 @@ loaded project in a fancy table.
 `--filter` is available and will fuzzy match instances. `--filter="this AND that"`
 will fail however due to a bug :\
 
-**
+
 #### `gci-status <instance>`
 
 Obtain the status of an instance or group of instances.
@@ -119,17 +118,20 @@ Start an instance
 
 Currently only supports one instance name
 
+
 #### `gci-stop <instance>`
 
 Stop an instance
 
 Currently only supports one instance name
 
-### `gcr [zone]`
+
+#### `gcr [zone]`
 
 List the available regions with your project quotas and region status along side
 
-### `gcz [zone]`
+
+#### `gcz [zone]`
 
 List the available zones, the region it lives in and the zones status
 
