@@ -1,0 +1,62 @@
+#!/bin/bash
+
+source $(dirname ${BASH_SOURCE[0]})/shared.inc
+
+
+## Autocomplete - gci
+
+_gci-stop() {
+  local command="$1"
+  local word="$2"
+  COMPREPLY=($(compgen -W "$(gci --format="value(name)" --filter="RUNNING")" -- ${word}))
+  return 0
+}
+
+_gci-start() {
+  local command="$1"
+  local word="$2"
+  COMPREPLY=($(compgen -W "$(gci --format="value(name)" --filter="TERMINATED")" -- ${word}))
+  return 0
+}
+
+
+
+
+## instances list
+gci() {
+	# TODO: Filters are broken and will only match first item in a "" quoted list
+	gformat="[box]"
+	## Cheap trick - drop pretty formatting when piping output
+	[[  -p /dev/stdout ]] && gformat=""
+	gcloud compute instances list --format="${gformat}" ${@}
+}
+
+## Get state of instances
+gci-status() {
+# TODO: Issue with filter parsing. needs xxx OR xxx see "gcloud topic filters"
+	local inputs="$(_bmg_readinputs $@)"
+	[[ -z "$inputs" ]] && _bmg_usage "<instance-name>" && return 1
+	gci --filter ${inputs} --format="table[no-heading](name,status)"
+}
+
+gci-start() {
+# TODO: find zone --zone is required
+	local inputs="$(_bmg_readinputs $@)"
+	[[ -z "$inputs" ]] && _bmg_usage "<instance-name> [--zone=<zone>]" && return 1
+	gcloud compute instances start $1
+}
+
+gci-stop() {
+# TODO: find zone --zone is required
+	local inputs="$(_bmg_readinputs $@)"
+	[[ -z "$inputs" ]] && _bmg_usage "<instance-name> [--zone=<zone>]" && return 1
+	gcloud compute instances stop $1
+}
+
+gci-reset() {
+# TODO: find zone --zone is required
+	local inputs="$(_bmg_readinputs $@)"
+	[[ -z "$inputs" ]] && _bmg_usage "<instance-name> [--zone=<zone>]" && return 1
+	gcloud compute instances reset $1
+}
+

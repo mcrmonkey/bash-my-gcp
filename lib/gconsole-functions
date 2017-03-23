@@ -1,0 +1,48 @@
+#!/bin/bash
+
+
+## Auto Complete - gconsole
+_gcp-console() {
+	local command="$1"
+	local word="$2"
+	COMPREPLY=($(compgen -W "iam net compute storage kubes k8" -- ${word}))
+	return 0
+}
+
+## Command - gconsole
+
+gconsole() {
+	## this gcloud command sprays over stdout and stderr.
+	## something with --format would be nice instead of this.
+	## This is dirty but works for now
+
+	PROJID="?project=$(gcloud config get-value project --format="object" 2>/dev/null)"
+	CONURL="https://console.cloud.google.com"
+	SECTION="/home"
+
+	case $1 in
+		"iam")
+			SECTION="/iam-admin"
+			;;
+		"net")
+			SECTION="/networking"
+			;;
+		"compute")
+			SECTION="/compute"
+			;;
+		"storage")
+			SECTION="/storage"
+			;;
+		"kubes"|"k8")
+			SECTION="/kubernetes"
+			;;
+	esac
+
+	if [ -x /usr/bin/xdg-open ]; then
+		/usr/bin/xdg-open ${CONURL}${SECTION}${PROJID}
+	else
+		echo -e "I don't know how to start a browser on this system without xdg-open ¯\\_(ツ)_/¯\ncopy pasta this to your browser of choice:\n"
+		echo -e "${CONURL}${SECTION}${PROJID}\n"
+	fi
+}
+

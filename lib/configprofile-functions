@@ -1,0 +1,25 @@
+#!/bin/bash
+
+## Auto complete - configs
+_gcp-config-profile() {
+	local command="$1"
+	local word="$2"
+	COMPREPLY=($(compgen -W "$(gcloud config configurations list --format="value[terminator=' '](name)")" -- ${word}))
+	return 0
+}
+
+
+## Config switching
+gcp() {
+	if [ -z $1 ]; then
+		gcloud config configurations list
+	else
+		gcloud config configurations activate $@
+	fi
+}
+
+## return the project ID of current active project
+gcp-id() {
+	gcloud config get-value project 2>&1 |tail -n1
+}
+
