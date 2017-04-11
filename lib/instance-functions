@@ -28,7 +28,13 @@ gci() {
 	gformat="[box]"
 	## Cheap trick - drop pretty formatting when piping output
 	[[  -p /dev/stdout ]] && gformat=""
-	gcloud compute instances list --format="${gformat}" ${@}
+  if [[ "${@}" == *"--"* ]]; then
+    gcloud compute instances list --format="${gformat}" "${@}"
+  elif [ ! -z "${@}" ]; then
+    gcloud compute instances list --format="${gformat}" --filter="${@}"
+  else
+    gcloud compute instances list --format="${gformat}"
+  fi
 }
 
 ## Get state of instances
