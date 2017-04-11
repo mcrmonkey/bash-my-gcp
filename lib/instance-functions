@@ -65,3 +65,29 @@ gci-zone() {
   [[ -z "$inputs" ]] && _bmg_usage "<instance-name> [--zone=<zone>]" && return 1
   gcloud compute instances list --format='value(ZONE)' --filter="NAME=$1"
 }
+
+gci-ips() {
+  local inputs="$(_bmg_readinputs $@)"
+  [[ -z "$inputs" ]] && _bmg_usage "<instance-name>" && return 1
+  gcloud compute instances list --format='value(NAME,INTERNAL_IP,EXTERNAL_IP)' --filter="NAME~$1"
+}
+
+gci-iip() {
+  local inputs="$(_bmg_readinputs $@)"
+  [[ -z "$inputs" ]] && _bmg_usage "<instance-name>" && return 1
+  gcloud compute instances list --format='value(NAME,INTERNAL_IP)' --filter="NAME~$1"
+}
+
+gci-eip() {
+  local inputs="$(_bmg_readinputs $@)"
+  [[ -z "$inputs" ]] && _bmg_usage "<instance-name>" && return 1
+  gcloud compute instances list --format='value(NAME,EXTERNAL_IP)' --filter="NAME~$1"
+}
+
+
+
+
+
+
+
+
