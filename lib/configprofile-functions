@@ -8,6 +8,19 @@ _gcp-config-profile() {
 	return 0
 }
 
+_validate_config() {
+  project=$1
+  gcloud projects describe ${project} 2>&1 | cat - > /tmp/validate_config
+  grep -q "does not have any valid credentials" /tmp/validate_config && echo "account" && return 1
+  grep -q "do not have permission" /tmp/validate_config && echo "project" && return 1
+  echo "ok"
+  return 0
+}
+
+_config_exists() {
+  name=$1
+  gcp | awk '{print $1}' | grep -q "^${name}$" && return 0
+}
 
 ## Config switching
 gcp() {
@@ -23,3 +36,60 @@ gcp-id() {
 	gcloud config get-value project 2>&1 |tail -n1
 }
 
+## Create gcloud configuration
+gcp-create() {
+  if [ "$#" -ne 3 ]; then
+    _bmg_usage "<config_name> <gcloud_account> <project_name>" && return 1
+  fi
+  if ( $(_config_exists $1) ); then
+    _warning "Configuration [$1] already exists."
+    _bmg_usage "<config_name> <gcloud_account> <project_name>" && return 1
+  fi
+  _warning "Creating new configuration:"
+  _start_info
+  current_config=$(gcp | awk '($2=="True"){print $1}')
+  gcloud config configurations create $1
+  gcloud config set account $2
+  gcloud config set project $3
+  valid=$(_validate_config $3)
+  case ${valid} in
+    project )
+      _warning "Account [$2] does not appear to have permission to access [$3]"
+      reset=true
+      ;;
+    account )
+      _warning "Account [$2] is invalid or not authenticated."
+      reset=true
+      ;;
+    ok )
+      reset=false
+      ;;
+  esac
+  _end_info
+  if ( $reset ); then
+    _start_info
+    gcp ${current_config}
+    gcp-delete $1
+    _end_info
+    _bmg_usage "<config_name> <gcloud_account> <project_name>" && return 1
+  fi
+}
+
+## Delete gcloud configuration
+gcp-delete() {
+  if [ "$#" -ne 1 ]; then
+    _bmg_usage "<config_name> <gcloud_account> <project_name>" && return 1
+  fi
+  current_config=$(gcp | awk '($2=="True"){print $1}')
+  if [ "$current_config" == "$1" ]; then
+    _warning "[$1] is active, switching to [default]."
+    gcp default
+  fi
+  if ( $(_config_exists $1) ); then
+    _start_info
+    echo -e "Y\n" | gcloud config configurations delete $1
+    _end_info
+  else
+    _warning "Config [$1] does not exist."
+  fi
+}
