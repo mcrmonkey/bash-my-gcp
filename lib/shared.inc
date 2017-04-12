@@ -14,3 +14,15 @@ _bmg_readstdin() {
      sed 's/\ $//'
 }
 
+_warning() {
+  echo -e "\e[33m${1}\e[0m"
+}
+
+_start_info() {
+  echo -ne "\e[34m"
+}
+
+_end_info() {
+  echo -ne "\e[0m"
+}
+
