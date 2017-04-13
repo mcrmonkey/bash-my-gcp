@@ -1,11 +1,9 @@
 #!/bin/bash
 
-
 ## Auto Complete - gconsole
 _gcp-console() {
-	local command="$1"
 	local word="$2"
-	COMPREPLY=($(compgen -W "iam net compute storage kubes k8" -- ${word}))
+	COMPREPLY=($(compgen -W "iam net compute storage kubes k8" -- "${word}"))
 	return 0
 }
 
@@ -16,7 +14,7 @@ gconsole() {
 	## something with --format would be nice instead of this.
 	## This is dirty but works for now
 
-	PROJID="?project=$(gcloud config get-value project --format="object" 2>/dev/null)"
+	PROJID="?project=$(gcp-id)"
 	CONURL="https://console.cloud.google.com"
 	SECTION="/home"
 

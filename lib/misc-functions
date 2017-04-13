@@ -3,17 +3,17 @@
 ## Regions and zones
 
 gcr() {
-	if [ -z $1 ]; then
+	if [ -z "$1" ]; then
 	    gcloud compute regions list
 	else
-	    gcloud compute regions describe $@
+	    gcloud compute regions describe "$@"
 	fi
 }
 
 gcz() {
-	if [ -z $1 ]; then
+	if [ -z "$1" ]; then
     	gcloud compute zones list
 	else
-		gcloud compute zones describe $@
+		gcloud compute zones describe "$@"
 	fi
 }

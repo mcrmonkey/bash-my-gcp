@@ -1,33 +1,30 @@
 #!/bin/bash
 
-source $(dirname ${BASH_SOURCE[0]})/shared.inc
+source "$(dirname ${BASH_SOURCE[0]})/shared.inc"
 
 
 ## Autocomplete - gci
 
 _gci-stop() {
-  local command="$1"
   local word="$2"
-  COMPREPLY=($(compgen -W "$(gci --format="value(name)" --filter="RUNNING")" -- ${word}))
+  COMPREPLY=($(compgen -W "$(gci --format="value(name)" --filter="RUNNING")" -- "${word}"))
   return 0
 }
 
 _gci-start() {
-  local command="$1"
   local word="$2"
-  COMPREPLY=($(compgen -W "$(gci --format="value(name)" --filter="TERMINATED")" -- ${word}))
+  COMPREPLY=($(compgen -W "$(gci --format="value(name)" --filter="TERMINATED")" -- "${word}"))
   return 0
 }
-
 
 
 
 ## instances list
 gci() {
-	# TODO: Filters are broken and will only match first item in a "" quoted list
-	gformat="[box]"
-	## Cheap trick - drop pretty formatting when piping output
-	[[  -p /dev/stdout ]] && gformat=""
+  # TODO: Filters are broken and will only match first item in a "" quoted list
+  gformat="[box]"
+  ## Cheap trick - drop pretty formatting when piping output
+  [[  -p /dev/stdout ]] && gformat=""
   if [[ "${@}" == *"--"* ]]; then
     gcloud compute instances list --format="${gformat}" "${@}"
   elif [ ! -z "${@}" ]; then
@@ -39,31 +36,31 @@ gci() {
 
 ## Get state of instances
 gci-status() {
-# TODO: Issue with filter parsing. needs xxx OR xxx see "gcloud topic filters"
-	local inputs="$(_bmg_readinputs $@)"
-	[[ -z "$inputs" ]] && _bmg_usage "<instance-name>" && return 1
-	gci --filter ${inputs} --format="table[no-heading](name,status)"
+  #TODO: Issue with filter parsing. needs xxx OR xxx see "gcloud topic filters"
+  local inputs="$(_bmg_readinputs $@)"
+  [[ -z "$inputs" ]] && _bmg_usage "<instance-name>" && return 1
+  gci --filter "${inputs}" --format="table[no-heading](name,status)"
 }
 
 gci-start() {
-	local inputs="$(_bmg_readinputs $@)"
-	[[ -z "$inputs" ]] && _bmg_usage "<instance-name> [--zone=<zone>]" && return 1
-  ZONE=$(gci-zone $1)
-	gcloud compute instances start --zone $ZONE $1
+  local inputs="$(_bmg_readinputs $@)"
+  [[ -z "$inputs" ]] && _bmg_usage "<instance-name> [--zone=<zone>]" && return 1
+  ZONE=$(gci-zone "$1")
+  gcloud compute instances start --zone "$ZONE" "$1"
 }
 
 gci-stop() {
-	local inputs="$(_bmg_readinputs $@)"
-	[[ -z "$inputs" ]] && _bmg_usage "<instance-name> [--zone=<zone>]" && return 1
-  ZONE=$(gci-zone $1)
-	gcloud compute instances stop --zone $ZONE $1
+  local inputs="$(_bmg_readinputs $@)"
+  [[ -z "$inputs" ]] && _bmg_usage "<instance-name> [--zone=<zone>]" && return 1
+  ZONE=$(gci-zone "$1")
+  gcloud compute instances stop --zone "$ZONE" "$1"
 }
 
 gci-reset() {
-	local inputs="$(_bmg_readinputs $@)"
-	[[ -z "$inputs" ]] && _bmg_usage "<instance-name> [--zone=<zone>]" && return 1
-  ZONE=$(gci-zone $1)
-  gcloud compute instances reset --zone $ZONE $1
+  local inputs="$(_bmg_readinputs $@)"
+  [[ -z "$inputs" ]] && _bmg_usage "<instance-name> [--zone=<zone>]" && return 1
+  ZONE=$(gci-zone "$1")
+  gcloud compute instances reset --zone "$ZONE" "$1"
 }
 
 gci-zone() {
@@ -89,11 +86,5 @@ gci-eip() {
   [[ -z "$inputs" ]] && _bmg_usage "<instance-name>" && return 1
   gcloud compute instances list --format='value(NAME,EXTERNAL_IP)' --filter="NAME~$1"
 }
-
-
-
-
-
-
 
 

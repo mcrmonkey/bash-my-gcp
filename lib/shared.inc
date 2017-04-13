@@ -1,3 +1,5 @@
+#!/bin/bash
+
 _bmg_usage() {
 echo "USAGE: ${FUNCNAME[1]} $@" > /dev/stderr
 }
