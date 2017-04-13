@@ -1,0 +1,34 @@
+#!/bin/bash
+
+source $(dirname ${BASH_SOURCE[0]})/shared.inc
+
+## Auto complete
+_gcd-zones() {
+  local command="$1"
+  local word="$2"
+  COMPREPLY=($(compgen -W "$(gcloud dns managed-zones list --format="value[terminator=' '](name)")" -- ${word}))
+  return 0
+}
+
+## list or describe managed zones
+gcd-zones() {
+  if [ -z "${@}" ]; then
+    gcloud dns managed-zones list
+  else
+    gcloud dns managed-zones describe ${@}
+  fi
+}
+
+gcd() {
+  local inputs="$(_bmg_readinputs $@)"
+  [[ -z "$inputs" ]] && _bmg_usage "<dns_zone> [<record>]" && return 1
+  ZONE=$1
+  ARGS="${@:2}"
+  if [[ "${ARGS}" == *"--"* ]]; then
+    gcloud dns record-sets list --zone ${ZONE} "${ARGS}"
+  elif [ ! -z "${ARGS}" ]; then
+    gcloud dns record-sets list --zone ${ZONE} --filter="${ARGS}"
+  else
+    gcloud dns record-sets list --zone ${ZONE}
+  fi
+}
