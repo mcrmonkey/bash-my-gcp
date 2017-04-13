@@ -10,4 +10,7 @@ complete -F _gcp-console gconsole
 complete -F _gci-stop gci-stop
 complete -F _gci-start gci-start
 complete -F _gci-start gci-reset
+## Autocomplete - gcd
+complete -F _gcd-zones gcd-zones
+complete -F _gcd-zones gcd
 
