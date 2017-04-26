@@ -1,0 +1,19 @@
+#!/bin/bash
+
+source "$(dirname ${BASH_SOURCE[0]})/shared.inc"
+
+
+## Autocomplete - gssh
+
+_gssh() {
+  local word="$2"
+  COMPREPLY=($(compgen -W "$(gci --format="value(name)" --filter="RUNNING")" -- "${word}"))
+  return 0
+}
+
+
+## ssh - link ssh known_host file with gcp project ID
+gssh() {
+	ssh -o UserKnownHostsFile=~/.ssh/known_hosts-$(gcp-id) ${@}
+}
+
