@@ -28,7 +28,7 @@ gci() {
   if [[ "${@}" == *"--"* ]]; then
     gcloud compute instances list --format="${gformat}" "${@}"
   elif [ ! -z "${@}" ]; then
-    gcloud compute instances list --format="${gformat}" --filter="${@}"
+    gcloud compute instances list --format="${gformat}" --filter="NAME~${@}"
   else
     gcloud compute instances list --format="${gformat}"
   fi
