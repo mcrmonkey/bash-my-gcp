@@ -32,18 +32,28 @@ git clone https://www.github.com/mcrmonkey/bash-my-gcp
 
 The scripts will need to be loaded in to your bash session:
 
-Execute or add the following line to your bashrc file:
+If you have make installed run the following to add it to you bashrc file:
+
+```
+make install
+```
+
+or add the following line to your bashrc file manually:
 
 ```
 . /path/to/bash-my-gcp/loader.sh
 ```
+
+You can also run the above line manually as and when you need it
 
 
 ## Usage:
 
 The following commands are available:
 
-### `gcp [config profile]`
+### Configuration profile operations
+
+#### `gcp [config profile]`
 
 This command handles switching between GCP configuration profiles and is
 a wrapper around the `gcloud config conigurations` command
@@ -66,8 +76,21 @@ set them up:
 gcloud topic configurations
 ```
 
+#### `gcp-id`
 
-### `gconsole [section]`
+Display the current project ID
+
+#### `gcp-create <config_name> <gcloud_account> <project_name>`
+
+Create a new configuration profile 
+
+`<config_name>` - Name of the config profile. e.g.: gaskets-nonprod
+`<gcloud_account>` - The account you want to use with the project. This account will be tested against the project as its added. 
+`<project_name>` - The project name
+
+### Console operations
+
+#### `gconsole [section]`
 
 This command will open the cloud console on either the home page or the
 specified section i.e. networks
@@ -96,8 +119,21 @@ gconsole net
 
 Tab completion is available for this command.
 
+### Cloud DNS operations
 
-### `gci`
+#### `gcd-zones`
+
+List or describe managed zones.
+
+Tab completion is available for this command.
+
+#### `gcd`
+
+List DNS record sets
+
+### Instance operations
+
+#### `gci`
 
 This command will list the current instances and their state in the currently
 loaded project in a fancy table.
@@ -118,13 +154,30 @@ Start an instance
 
 Currently only supports one instance name
 
-
 #### `gci-stop <instance>`
 
 Stop an instance
 
 Currently only supports one instance name
 
+#### `gci-zone <instance>`
+
+Return the zone for an instance
+
+#### `gci-ips <instance>`
+
+List the IP's for an instance
+
+#### `gci-iip <instance>`
+
+Show internal IP's for an instance
+
+#### `gci-eip <instance>`
+
+Show external IP's for an instance
+
+
+### Zones and regions
 
 #### `gcr [zone]`
 
@@ -134,4 +187,13 @@ List the available regions with your project quotas and region status along side
 #### `gcz [zone]`
 
 List the available zones, the region it lives in and the zones status
+
+
+### Misc
+
+#### `gssh <IP or hostname>`
+
+Wrapper around ssh command to funnel host key ID's in to knownhost file suffixed with the project ID
+eg: ~/.ssh/known_hosts-abc-prod-1234
+
 
