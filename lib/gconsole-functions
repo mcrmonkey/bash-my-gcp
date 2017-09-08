@@ -1,45 +1,50 @@
 #!/bin/bash
 
+declare -A console_targets=(
+	[iam]="/iam-admin"
+	[net]="/networking"
+	[networking]="/networking"
+	[fire]="/networking/firewalls"
+	[firewall]="/networking/firewalls"
+	[lb]="/net-services/loadbalancing/loadBalancers/list"
+	[loadbalance]="/net-services/loadbalancing/loadBalancers/list"
+	[loadbalancer]="/net-services/loadbalancing/loadBalancers/list"
+	[compute]="/compute"
+	[storage]="/storage"
+	[kubes]="/kubernetes"
+	[k8]="/kubernetes"
+	[appeng]="/appengine"
+	[appengine]="/appengine"
+	[sql]="/sql"
+	[apis]="/apis/dashboard"
+	[api]="/apis/dashboard"
+)
+
 ## Auto Complete - gconsole
 _gcp-console() {
 	local word="$2"
-	COMPREPLY=($(compgen -W "iam net compute storage kubes k8" -- "${word}"))
+	COMPREPLY=($(compgen -W "$(echo ${!console_targets[@]})" -- "${word}"))
 	return 0
 }
 
 ## Command - gconsole
-
 gconsole() {
-	## this gcloud command sprays over stdout and stderr.
-	## something with --format would be nice instead of this.
-	## This is dirty but works for now
 
-	PROJID="?project=$(gcp-id)"
 	CONURL="https://console.cloud.google.com"
 	SECTION="/home"
+	PROJID="?project=$(gcp-id)"
 
-	case $1 in
-		"iam")
-			SECTION="/iam-admin"
-			;;
-		"net")
-			SECTION="/networking"
-			;;
-		"compute")
-			SECTION="/compute"
-			;;
-		"storage")
-			SECTION="/storage"
-			;;
-		"kubes"|"k8")
-			SECTION="/kubernetes"
-			;;
-	esac
+	if [[ ! -z ${console_targets[$1]} ]] ; then
+		SECTION="${console_targets[$1]}"
+	else
+		echo -e "Error: section unknown \n...does it need adding?"
+		return 1
+	fi
 
 	if [ -x /usr/bin/xdg-open ]; then
 		/usr/bin/xdg-open ${CONURL}${SECTION}${PROJID}
 	else
-		echo -e "I don't know how to start a browser on this system without xdg-open ¯\\_(ツ)_/¯\ncopy pasta this to your browser of choice:\n"
+		echo -e "\nOpps: can't open browser without xdg-open ¯\\_(ツ)_/¯\ncopy pasta this to your browser of choice:\n"
 		echo -e "${CONURL}${SECTION}${PROJID}\n"
 	fi
 }
