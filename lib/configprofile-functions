@@ -38,11 +38,11 @@ gcp-id() {
 ## Create gcloud configuration
 gcp-create() {
   if [ "$#" -ne 3 ]; then
-    _bmg_usage "<config_name> <gcloud_account> <project_name>" && return 1
+    _bmg_usage "<config_name> <gcloud_account> <project_ID>" && return 1
   fi
   if ( $(_config_exists "$1") ); then
     _warning "Configuration [$1] already exists."
-    _bmg_usage "<config_name> <gcloud_account> <project_name>" && return 1
+    _bmg_usage "<config_name> <gcloud_account> <project_ID>" && return 1
   fi
   _warning "Creating new configuration:"
   _start_info
@@ -70,14 +70,14 @@ gcp-create() {
     gcp "${current_config}"
     gcp-delete "$1"
     _end_info
-    _bmg_usage "<config_name> <gcloud_account> <project_name>" && return 1
+    _bmg_usage "<config_name> <gcloud_account> <project_ID>" && return 1
   fi
 }
 
 ## Delete gcloud configuration
 gcp-delete() {
   if [ "$#" -ne 1 ]; then
-    _bmg_usage "<config_name> <gcloud_account> <project_name>" && return 1
+    _bmg_usage "<config_name> <gcloud_account> <project_ID>" && return 1
   fi
   current_config=$(gcp | awk '($2=="True"){print $1}')
   if [ "$current_config" == "$1" ]; then
