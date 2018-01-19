@@ -23,7 +23,8 @@ declare -A console_targets=(
 ## Auto Complete - gconsole
 _gcp-console() {
 	local word="$2"
-	COMPREPLY=($(compgen -W "$(echo ${!console_targets[@]})" -- "${word}"))
+	# shellcheck disable=SC2116
+	COMPREPLY=($(compgen -W "$(echo "${!console_targets[@]}")" -- "${word}"))
 	return 0
 }
 
@@ -33,19 +34,20 @@ gconsole() {
 	CONURL="https://console.cloud.google.com"
 	SECTION="/home"
 	PROJID="?project=$(gcp-id)"
-
-	if [[ ! -z ${console_targets[$1]} ]] ; then
-		SECTION="${console_targets[$1]}"
-	else
-		echo -e "Error: section unknown \n...does it need adding?"
-		return 1
-	fi
-
+    if [[ ! -z $1 ]] ; then
+		if [[ ! -z ${console_targets[$1]} ]] ; then
+			SECTION="${console_targets[$1]}"
+		else
+			echo -e "Error: section unknown \n...does it need adding?"
+			return 1
+		fi
+    fi
+	FinalURL="${CONURL}${SECTION}${PROJID}"
 	if [ -x /usr/bin/xdg-open ]; then
-		/usr/bin/xdg-open ${CONURL}${SECTION}${PROJID}
+		/usr/bin/xdg-open "${FinalURL}"
 	else
 		echo -e "\nOpps: can't open browser without xdg-open ¯\\_(ツ)_/¯\ncopy pasta this to your browser of choice:\n"
-		echo -e "${CONURL}${SECTION}${PROJID}\n"
+		echo -e "${FinalURL}\n"
 	fi
 }
 
