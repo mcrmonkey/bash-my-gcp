@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$(dirname ${BASH_SOURCE[0]})/shared.inc"
+source "$(dirname ${BASH_SOURCE[0]})/shared.sh"
 
 ## Auto complete
 _gcd-zones() {

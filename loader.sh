@@ -8,9 +8,12 @@ complete -F _gcp-config-profile gcp
 complete -F _gcp-console gconsole
 
 ## Autocomplete - gci
-complete -F _gci-stop gci-stop
+complete -F _gci-running gci-stop
 complete -F _gci-start gci-start
-complete -F _gci-stop gci-reset
+complete -F _gci-running gci-reset
+complete -F _gci-del gci-del
+complete -F _gci-running gci-serial
+complete -F _gci-running gci-serial-tail
 
 ## Autocomplete - gcd
 complete -F _gcd-zones gcd-zones
