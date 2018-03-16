@@ -18,6 +18,9 @@ declare -A console_targets=(
 	[sql]="/sql"
 	[apis]="/apis/dashboard"
 	[api]="/apis/dashboard"
+	[instance-groups]="/compute/instanceGroups"
+	[logs]="/logs/viewer"
+	[functions]="/functions"
 )
 
 ## Auto Complete - gconsole
