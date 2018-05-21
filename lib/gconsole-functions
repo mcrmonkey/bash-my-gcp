@@ -10,6 +10,7 @@ declare -A console_targets=(
 	[loadbalance]="/net-services/loadbalancing/loadBalancers/list"
 	[loadbalancer]="/net-services/loadbalancing/loadBalancers/list"
 	[compute]="/compute"
+	[images]="/compute/images"
 	[storage]="/storage"
 	[kubes]="/kubernetes"
 	[k8]="/kubernetes"
