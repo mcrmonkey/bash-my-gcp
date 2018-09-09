@@ -2,17 +2,14 @@
 
 declare -A console_targets=(
 	[iam]="/iam-admin"
+	[billing]="/billing"
 	[net]="/networking"
 	[networking]="/networking"
-	[fire]="/networking/firewalls"
 	[firewall]="/networking/firewalls"
 	[lb]="/net-services/loadbalancing/loadBalancers/list"
-	[loadbalance]="/net-services/loadbalancing/loadBalancers/list"
 	[loadbalancer]="/net-services/loadbalancing/loadBalancers/list"
-	[cdn]="/net-services/cdn"
+	[cdn]="/net-services/cdn/list"
 	[dns]="/net-services/dns"
-	[compute]="/compute"
-	[images]="/compute/images"
 	[storage]="/storage"
 	[kubes]="/kubernetes"
 	[k8]="/kubernetes"
@@ -21,9 +18,13 @@ declare -A console_targets=(
 	[sql]="/sql"
 	[apis]="/apis/dashboard"
 	[api]="/apis/dashboard"
-	[instance-groups]="/compute/instanceGroups"
 	[logs]="/logs/viewer"
 	[functions]="/functions"
+	[compute]="/compute"
+	[images]="/compute/images"
+	[instance-groups]="/compute/instanceGroups"
+	[metadata]="/compute/metadata/"
+	[sshkeys]="/compute/metadata/sshKeys"
 )
 
 ## Auto Complete - gconsole
