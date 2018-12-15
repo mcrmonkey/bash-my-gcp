@@ -48,7 +48,7 @@ source loader.sh
 Once loaded you should then be able to try out some of the commands.
 
 
-See the [README.md file in the repository](https://github.com/mcrmonkey/bash-my-gcp/README.md) for how to add this to your regular bash environment.
+See the [README.md file in the repository](https://github.com/mcrmonkey/bash-my-gcp/blob/master/README.md) for how to add this to your regular bash environment.
 
 
 
