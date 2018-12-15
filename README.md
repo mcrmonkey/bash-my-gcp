@@ -11,6 +11,9 @@ endorsed and/or supported by Google themselves. Use at your own risk etc.
 
 This project has been inspired by the [bash-my-aws](https://github.com/realestate-com-au/bash-my-aws) project.
 
+Give this a try:
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/mcrmonkey/bash-my-gcp&tutorial=cloudshell-tutorial.md)
+
 
 ## Requirements
 
@@ -82,10 +85,10 @@ Display the current project ID
 
 #### `gcp-create <config_name> <gcloud_account> <project_name>`
 
-Create a new configuration profile 
+Create a new configuration profile
 
 `<config_name>` - Name of the config profile. e.g.: gaskets-nonprod
-`<gcloud_account>` - The account you want to use with the project. This account will be tested against the project as its added. 
+`<gcloud_account>` - The account you want to use with the project. This account will be tested against the project as its added.
 `<project_name>` - The project name
 
 ### Console operations
