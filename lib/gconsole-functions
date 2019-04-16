@@ -25,6 +25,7 @@ declare -A console_targets=(
 	[instance-groups]="/compute/instanceGroups"
 	[metadata]="/compute/metadata/"
 	[sshkeys]="/compute/metadata/sshKeys"
+	[disks]="/compute/disks"
 )
 
 ## Auto Complete - gconsole
