@@ -9,7 +9,7 @@ command line tools.
 Although these scripts make use of Google products and services, these scripts are not
 endorsed and/or supported by Google themselves. Use at your own risk etc.
 
-This project has been inspired by the [bash-my-aws](https://github.com/realestate-com-au/bash-my-aws) project.
+This project has been inspired by the [bash-my-aws](https://github.com/bash-my-universe/bash-my-aws) project.
 
 Give this a try:
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/mcrmonkey/bash-my-gcp&tutorial=cloudshell-tutorial.md)
