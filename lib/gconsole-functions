@@ -26,6 +26,8 @@ declare -A console_targets=(
 	[metadata]="/compute/metadata/"
 	[sshkeys]="/compute/metadata/sshKeys"
 	[disks]="/compute/disks"
+	[cloud-build_builds]="/cloud-build/builds"
+	[cloud-build_triggers]="/cloud-build/triggers"
 )
 
 ## Auto Complete - gconsole
