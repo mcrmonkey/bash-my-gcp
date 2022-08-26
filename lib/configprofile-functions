@@ -18,11 +18,12 @@ _validate_config() {
 
 _config_exists() {
   name="$1"
-  gcp | awk '{print $1}' | grep -q "^${name}$" && return 0
+  gcpro | awk '{print $1}' | grep -q "^${name}$" && return 0
 }
 
-## Config switching
-gcp() {
+## Config switching conllision with the gcp in github so swith to gcn
+## for google cloud named configurations
+gcpro() {
 	if [ -z "$1" ]; then
 		gcloud config configurations list
 	else
@@ -46,7 +47,7 @@ gcp-create() {
   fi
   _warning "Creating new configuration:"
   _start_info
-  current_config=$(gcp | awk '($2=="True"){print $1}')
+  current_config=$(gcpro | awk '($2=="True"){print $1}')
   gcloud config configurations create "$1"
   gcloud config set account "$2"
   gcloud config set project "$3"
@@ -67,7 +68,7 @@ gcp-create() {
   _end_info
   if ( $reset ); then
     _start_info
-    gcp "${current_config}"
+    gcpro "${current_config}"
     gcp-delete "$1"
     _end_info
     _bmg_usage "<config_name> <gcloud_account> <project_ID>" && return 1
@@ -79,10 +80,10 @@ gcp-delete() {
   if [ "$#" -ne 1 ]; then
     _bmg_usage "<config_name>" && return 1
   fi
-  current_config=$(gcp | awk '($2=="True"){print $1}')
+  current_config=$(gcpro | awk '($2=="True"){print $1}')
   if [ "$current_config" == "$1" ]; then
     _warning "[$1] is active, switching to [default]."
-    gcp default
+    gcpro default
   fi
   if _config_exists "$1"; then
     _start_info

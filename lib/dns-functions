@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$(dirname ${BASH_SOURCE[0]})/shared.sh"
+source "$(dirname ${BASH_SOURCE[0]:-${(%):-%x}})/shared.sh"
 
 ## Auto complete
 _gcd-zones() {
@@ -18,7 +18,7 @@ gcd-zones() {
   fi
 }
 
-gcd() {
+gcdns() {
   local inputs="$(_bmg_readinputs "$@")"
   [[ -z "$inputs" ]] && _bmg_usage "<dns_zone> [<record>]" && return 1
   ZONE="$1"
