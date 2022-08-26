@@ -5,7 +5,7 @@
 for F in "$OURDIR/"lib/*-functions; do source "$F"; done
 
 ## Auto complete - configs
-complete -F _gcp-config-profile gcp
+complete -F _gcp-config-profile gcpro
 complete -F _gcp-console gconsole
 
 ## Autocomplete - gci
@@ -17,6 +17,6 @@ complete -F _gci-running gci-serial
 complete -F _gci-running gci-serial-tail
 
 ## Autocomplete - gcd
-complete -F _gcd-zones gcd-zones
-complete -F _gcd-zones gcd
+complete -F _gcdns-zones gcdns-zones
+complete -F _gcdns-zones gcdns
 

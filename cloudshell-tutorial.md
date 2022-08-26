@@ -124,10 +124,10 @@ Named configurations are intended to be an advanced feature, and you can probabl
 
 ### Creating a configuration profile
 
-You can create configuration profiles by using the gcp-create command:
+You can create configuration profiles by using the gcpro-create command:
 
 ```shell
-gcp-create
+gcpro-create
 ```
 
 This command requires:
@@ -142,14 +142,14 @@ You can list your saved configurations by typing:
 
 
 ```shell
-gcp
+gcpro
 ```
 ### Switching between configurations
 
 You can switch between configurations by typing:
 
 ```shell
-gcp config-name
+gcpro config-name
 ```
 
 **Tip:** If you dont know the name of your configuration profile you can use tab completion.

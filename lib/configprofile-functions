@@ -32,12 +32,12 @@ gcpro() {
 }
 
 ## return the project ID of current active project
-gcp-id() {
+gcpro-id() {
 	gcloud config get-value project 2>&1 |tail -n1
 }
 
 ## Create gcloud configuration
-gcp-create() {
+gcpro-create() {
   if [ "$#" -ne 3 ]; then
     _bmg_usage "<config_name> <gcloud_account> <project_ID>" && return 1
   fi
@@ -69,14 +69,14 @@ gcp-create() {
   if ( $reset ); then
     _start_info
     gcpro "${current_config}"
-    gcp-delete "$1"
+    gcpro-delete "$1"
     _end_info
     _bmg_usage "<config_name> <gcloud_account> <project_ID>" && return 1
   fi
 }
 
 ## Delete gcloud configuration
-gcp-delete() {
+gcpro-delete() {
   if [ "$#" -ne 1 ]; then
     _bmg_usage "<config_name>" && return 1
   fi

@@ -3,14 +3,14 @@
 source "$(dirname ${BASH_SOURCE[0]:-${(%):-%x}})/shared.sh"
 
 ## Auto complete
-_gcd-zones() {
+_gcdns-zones() {
   local word="$2"
   COMPREPLY=($(compgen -W "$(gcloud dns managed-zones list --format="value[terminator=' '](name)")" -- "${word}"))
   return 0
 }
 
 ## list or describe managed zones
-gcd-zones() {
+gcdns-zones() {
   if [ -z "${@}" ]; then
     gcloud dns managed-zones list
   else

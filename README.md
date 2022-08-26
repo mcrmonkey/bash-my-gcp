@@ -7,6 +7,8 @@ Google Cloud platform.
 All of these functions and aliases are wrappers around the Google Cloud SDK
 command line tools.
 
+
+**Please note**:
 Although these scripts make use of Google products and services, these scripts
 are not endorsed and/or supported by Google themselves. Use at your own risk
 etc.
@@ -14,13 +16,23 @@ etc.
 This project has been inspired by the
 [bash-my-aws](https://github.com/bash-my-universe/bash-my-aws) project.
 
-Give this a try:
+Why not give this a try:
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/mcrmonkey/bash-my-gcp&tutorial=cloudshell-tutorial.md)
+
+
+**Note**
+To aid with compatability in zsh some command names have recently changed.
+Please see below for more information.
+
+
+
 
 ## Requirements
 
 * [Google Cloud SDK](https://cloud.google.com/sdk/docs/quickstart-linux)
 * [bash](https://www.gnu.org/software/bash/)
+ or
+* [zsh](https://www.zsh.org/)
 
 ## Installation
 
@@ -58,8 +70,8 @@ The following commands are available:
 #### `gcpro [config profile]`
 
 This command handles switching between GCP configuration profiles and is
-a wrapper around the `gcloud config configurations` command. Note this has
-changed from gcp for zsh git alias compatibility.
+a wrapper around the `gcloud config configurations` command.
+**Note** this has recently changed from `gcp` for zsh git alias compatibility.
 
 Example:
 
@@ -83,7 +95,7 @@ gcloud topic configurations
 
 Display the current project ID
 
-#### `gcp-create <config_name> <gcloud_account> <project_name>`
+#### `gcpro-create <config_name> <gcloud_account> <project_name>`
 
 Create a new configuration profile
 
@@ -91,6 +103,11 @@ Create a new configuration profile
 * `<gcloud_account>` - The account you want to use with the project. This account
   will be tested against the project as its added.
 * `<project_name>` - The project name
+
+**Note**
+This command has recently changed from `gcp-create` to be more consistent with
+the zsh changes
+
 
 ### Console operations
 
@@ -125,16 +142,21 @@ Tab completion is available for this command.
 
 ### Cloud DNS operations
 
-#### `gcd-zones`
+#### `gcdns-zones`
 
 List or describe managed zones.
 
 Tab completion is available for this command.
 
+**Note**
+This has changed from `gcd-zones` in light of the changes to the `gcd` command
+so that it is more consistent.
+
 #### `gcdns`
 
-List DNS record sets. This has changed from gcd for zsh compatibility with git
-aliases
+List DNS record sets.
+**Note**
+This has changed from `gcd` for zsh compatibility with git aliases
 
 ### Instance operations
 
